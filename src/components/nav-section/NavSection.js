@@ -1,9 +1,9 @@
-import PropTypes from 'prop-types';
-import { NavLink as RouterLink } from 'react-router-dom';
+import PropTypes from "prop-types";
+import { NavLink as RouterLink } from "react-router-dom";
 // @mui
-import { Box, List, ListItemText } from '@mui/material';
+import { Box, Grid, List, ListItemText } from "@mui/material";
 //
-import { StyledNavItem, StyledNavItemIcon } from './styles';
+import { StyledNavItem } from "./styles";
 
 // ----------------------------------------------------------------------
 
@@ -37,17 +37,17 @@ function NavItem({ item }) {
       component={RouterLink}
       to={path}
       sx={{
-        '&.active': {
-          color: 'text.primary',
-          bgcolor: 'action.selected',
-          fontWeight: 'fontWeightBold',
+        "&.active": {
+          color: "text.primary",
+          bgcolor: "action.selected",
+          fontWeight: "fontWeightBold",
         },
       }}
     >
-      <StyledNavItemIcon>{icon && icon}</StyledNavItemIcon>
-
-      <ListItemText disableTypography primary={title} />
-
+      <Grid item sx={{ ml: 1, display: "flex" }}>
+        {icon && icon}
+      </Grid>
+      <ListItemText disableTypography primary={title} sx={{ ml: 2 }} />
       {info && info}
     </StyledNavItem>
   );

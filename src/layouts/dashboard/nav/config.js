@@ -1,40 +1,39 @@
 // component
-import SvgColor from '../../../components/svg-color';
+import SvgColor from "../../../components/svg-color";
+import AccountTreeIcon from "@mui/icons-material/AccountTree";
+import PersonIcon from "@mui/icons-material/Person";
+import GridViewIcon from "@mui/icons-material/GridView";
+import BadgeIcon from "@mui/icons-material/Badge";
 
 // ----------------------------------------------------------------------
 
-const icon = (name) => <SvgColor src={`/assets/icons/navbar/${name}.svg`} sx={{ width: 1, height: 1 }} />;
+const icon = (name) => (
+  <SvgColor
+    src={`/assets/icons/navbar/${name}.svg`}
+    sx={{ width: 1, height: 1 }}
+  />
+);
 
 const navConfig = [
   {
-    title: 'dashboard',
-    path: '/dashboard/app',
-    icon: icon('ic_analytics'),
+    title: "dashboard",
+    path: "/dashboard/app",
+    icon: <GridViewIcon />,
   },
   {
-    title: 'user',
-    path: '/dashboard/user',
-    icon: icon('ic_user'),
+    title: "kullanıcı",
+    path: "/dashboard/user",
+    icon: <PersonIcon />,
   },
   {
-    title: 'product',
-    path: '/dashboard/products',
-    icon: icon('ic_cart'),
+    title: "çalışan",
+    path: "/dashboard/employee",
+    icon: <BadgeIcon />,
   },
   {
-    title: 'blog',
-    path: '/dashboard/blog',
-    icon: icon('ic_blog'),
-  },
-  {
-    title: 'login',
-    path: '/login',
-    icon: icon('ic_lock'),
-  },
-  {
-    title: 'Not found',
-    path: '/404',
-    icon: icon('ic_disabled'),
+    title: "hiyerarşi",
+    path: "/dashboard/hierarchy",
+    icon: <AccountTreeIcon />,
   },
 ];
 
