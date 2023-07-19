@@ -8,9 +8,6 @@ export interface User {
 }
 
 async function postData({ userName, password }: User) {
-  console.log(
-    process.env.REACT_APP_BASE_BACKEND + routesV1.version + routesV1.auth.login
-  );
   return await axios({
     method: "POST",
     url:

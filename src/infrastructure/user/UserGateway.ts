@@ -1,4 +1,4 @@
-import { UserGatewayPort } from "../../core/user/port/userGatewayPort";
+import { UserGatewayPort } from "../../core/user/port/UserGatewayPort";
 import axios from "axios";
 import { routesV1 } from "../../app/apiRoutes";
 

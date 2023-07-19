@@ -47,11 +47,11 @@ export default function LoginForm() {
     return (
         <>
             <Stack spacing={3}>
-                <TextField name="email" label="Email address" onChange={(e) => setUserName(e.target.value)}/>
+                <TextField name="email" label="E-Posta" onChange={(e) => setUserName(e.target.value)}/>
 
                 <TextField
                     name="password"
-                    label="Password"
+                    label="Şifre"
                     type={showPassword ? "text" : "password"}
                     onChange={(e) => setPassword(e.target.value)}
                     InputProps={{
@@ -78,7 +78,7 @@ export default function LoginForm() {
             >
                 <Checkbox name="remember"/>
                 <Link variant="subtitle2" underline="hover">
-                    Forgot password?
+                    Şifreni mi unuttun?
                 </Link>
             </Stack>
 

@@ -1,4 +1,4 @@
-import { UserEntity, UserProps } from "../entity/user";
+import { UserEntity, UserProps } from "../entity/User";
 
 export class UserMapper {
   static toViewModel(props: UserProps): any {

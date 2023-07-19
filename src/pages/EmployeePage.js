@@ -1,6 +1,5 @@
 import { Helmet } from "react-helmet-async";
-import { filter } from "lodash";
-import { useState } from "react";
+import React, { useEffect, useState } from "react";
 // @mui
 import {
   Button,
@@ -21,58 +20,46 @@ import Scrollbar from "../components/scrollbar";
 import USERLIST from "../_mock/user";
 import { useDemoData } from "@mui/x-data-grid-generator";
 import { DataGridPro } from "@mui/x-data-grid-pro";
+import { useDispatch, useSelector } from "react-redux";
+import { employeeList } from "../core/employee/usecase/EmployeeList";
+import { employeeColumns } from "../core/employee/entity/Employee";
 
 // ----------------------------------------------------------------------
-
-const TABLE_HEAD = [
-  { id: "name", label: "Name", alignRight: false },
-  { id: "company", label: "Company", alignRight: false },
-  { id: "role", label: "Role", alignRight: false },
-  { id: "isVerified", label: "Verified", alignRight: false },
-  { id: "status", label: "Status", alignRight: false },
-  { id: "" },
-];
-
-// ----------------------------------------------------------------------
-
-function descendingComparator(a, b, orderBy) {
-  if (b[orderBy] < a[orderBy]) {
-    return -1;
-  }
-  if (b[orderBy] > a[orderBy]) {
-    return 1;
-  }
-  return 0;
-}
-
-function getComparator(order, orderBy) {
-  return order === "desc"
-    ? (a, b) => descendingComparator(a, b, orderBy)
-    : (a, b) => -descendingComparator(a, b, orderBy);
-}
-
-function applySortFilter(array, comparator, query) {
-  const stabilizedThis = array.map((el, index) => [el, index]);
-  stabilizedThis.sort((a, b) => {
-    const order = comparator(a[0], b[0]);
-    if (order !== 0) return order;
-    return a[1] - b[1];
-  });
-  if (query) {
-    return filter(
-      array,
-      (_user) => _user.name.toLowerCase().indexOf(query.toLowerCase()) !== -1
-    );
-  }
-  return stabilizedThis.map((el) => el[0]);
-}
-
-export default function UserPage() {
+const customColumnTypes = {
+  string: {
+    filterOperators: [
+      { label: "İçeren", value: "contains" },
+      { label: "İçermeyen", value: "notContains" },
+      { label: "ile başlayan", value: "startsWith" },
+      { label: "ile biten", value: "endsWith" },
+    ],
+  },
+  date: {
+    filterOperators: [
+      { label: "Is", value: "equals" },
+      { label: "Is not", value: "notEquals" },
+      { label: "Is before", value: "before" },
+      { label: "Is after", value: "after" },
+    ],
+  },
+};
+export default function EmployeePage() {
   const [open, setOpen] = useState(null);
 
   const [page, setPage] = useState(0);
 
   const [rowsPerPage, setRowsPerPage] = useState(5);
+
+  const [employeeState, setEmployeeState] = useState([]);
+
+  const dispatch = useDispatch();
+  const { employees, loading, error } = useSelector((state) => state.employee);
+
+  useEffect(() => {
+    dispatch(employeeList());
+    setEmployeeState(employees);
+    console.log("employeeState", employeeState);
+  }, [employeeState]);
 
   const handleCloseMenu = () => {
     setOpen(null);
@@ -96,6 +83,10 @@ export default function UserPage() {
     console.log(filterModel.items.map((item) => item));
   };
 
+  const handleNewEmployee = (event) => {
+    event.preventDefault();
+  };
+
   return (
     <>
       <Helmet>
@@ -115,6 +106,7 @@ export default function UserPage() {
           <Button
             variant="contained"
             startIcon={<Iconify icon="eva:plus-fill" />}
+            onClick={handleNewEmployee}
           >
             Yeni Kullanıcı
           </Button>
@@ -130,16 +122,9 @@ export default function UserPage() {
             >
               <TableContainer sx={{ minWidth: 800 }}>
                 <DataGridPro
-                  {...data}
-                  initialState={{
-                    ...data.initialState,
-                    columns: {
-                      columnVisibilityModel: {
-                        avatar: false,
-                        id: false,
-                      },
-                    },
-                  }}
+                  rows={employeeState}
+                  columns={employeeColumns}
+                  loading={loading}
                   unstable_headerFilters
                   onFilterModelChange={handleFilterModel}
                   sx={{ padding: "10px" }}

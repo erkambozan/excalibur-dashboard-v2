@@ -1,4 +1,4 @@
-import { UserProps } from "../entity/user";
+import { UserProps } from "../entity/User";
 
 export interface UserGatewayPort {
   getAll(): Promise<UserProps[]>;

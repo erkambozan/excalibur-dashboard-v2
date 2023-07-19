@@ -5,6 +5,7 @@ const hierarchy = "hierarchy";
 const typesRoot = "types";
 const hierarchyTypesRoot = "hierarchy";
 const workTypesRoot = "work";
+const employeeRoot = "employee";
 
 // Api Versions
 const v1 = "v1";
@@ -39,5 +40,10 @@ export const routesV1 = {
       create: `${typesRoot}/${workTypesRoot}/create`,
       delete: `${typesRoot}/${workTypesRoot}/:id`,
     },
+  },
+  employee: {
+    root: employeeRoot,
+    create: `/${employeeRoot}/create`,
+    list: `/${employeeRoot}/list`,
   },
 };

@@ -12,6 +12,7 @@ import { ProtectedRoute } from "./ProtectedRoute";
 import {useDispatch, useSelector} from "react-redux";
 import React, {useEffect} from "react";
 import {authSlice} from "./core/auth/authSlice";
+import EmployeePage from "./pages/EmployeePage";
 
 // ----------------------------------------------------------------------
 
@@ -19,7 +20,7 @@ export default function Router() {
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(authSlice.actions.isAuth());
-  }, []);
+  }, [dispatch]);
   const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
 
   const ProtectedRouteWrapper = (props) => (
@@ -34,7 +35,7 @@ export default function Router() {
             <Route element={<Navigate to="/dashboard/app" />} index />
             <Route path="app" element={<DashboardAppPage />} />
             <Route path="user" element={<UserPage />} />
-            <Route path="blog" element={<BlogPage />} />
+            <Route path="employee" element={<EmployeePage />} />
           </Route>
           <Route element={<SimpleLayout />}>
             <Route element={<Navigate to="/dashboard/app" />} index />

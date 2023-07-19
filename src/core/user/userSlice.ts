@@ -1,9 +1,11 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { userList } from "./usecase/userList/userList";
-import { UserEntity } from "./entity/user";
+import { userList } from "./usecase/UserList";
+import { UserEntity } from "./entity/User";
 
 export const initialState = {
   users: [] as UserEntity[],
+  loading: false,
+  error: null,
 };
 
 export const userSlice = createSlice({
@@ -13,7 +15,6 @@ export const userSlice = createSlice({
   extraReducers: (builder) => {
     builder.addCase(userList.fulfilled, (state, action) => {
       state.users = action.payload;
-      console.log("test slice extra reducer");
     });
   },
 });
