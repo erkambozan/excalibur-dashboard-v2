@@ -18,33 +18,16 @@ import Scrollbar from "../components/scrollbar";
 // sections
 // mock
 import USERLIST from "../_mock/user";
-import { useDemoData } from "@mui/x-data-grid-generator";
 import { DataGridPro } from "@mui/x-data-grid-pro";
 import { useDispatch, useSelector } from "react-redux";
 import { employeeList } from "../core/employee/usecase/EmployeeList";
 import { employeeColumns } from "../core/employee/entity/Employee";
+import { localeTableText } from "../app/tableLocale";
+import NewEmployeeModalDialog from "./NewEmployeeModalDialog";
 
-// ----------------------------------------------------------------------
-const customColumnTypes = {
-  string: {
-    filterOperators: [
-      { label: "İçeren", value: "contains" },
-      { label: "İçermeyen", value: "notContains" },
-      { label: "ile başlayan", value: "startsWith" },
-      { label: "ile biten", value: "endsWith" },
-    ],
-  },
-  date: {
-    filterOperators: [
-      { label: "Is", value: "equals" },
-      { label: "Is not", value: "notEquals" },
-      { label: "Is before", value: "before" },
-      { label: "Is after", value: "after" },
-    ],
-  },
-};
 export default function EmployeePage() {
   const [open, setOpen] = useState(null);
+  const [openModal, setOpenModal] = useState(false);
 
   const [page, setPage] = useState(0);
 
@@ -58,8 +41,7 @@ export default function EmployeePage() {
   useEffect(() => {
     dispatch(employeeList());
     setEmployeeState(employees);
-    console.log("employeeState", employeeState);
-  }, [employeeState]);
+  }, [dispatch]);
 
   const handleCloseMenu = () => {
     setOpen(null);
@@ -74,17 +56,16 @@ export default function EmployeePage() {
     setRowsPerPage(parseInt(event.target.value, 10));
   };
 
-  const { data } = useDemoData({
-    dataSet: "Employee",
-    rowLength: 10,
-  });
-
   const handleFilterModel = (filterModel) => {
     console.log(filterModel.items.map((item) => item));
   };
 
-  const handleNewEmployee = (event) => {
-    event.preventDefault();
+  const handleOpen = () => {
+    setOpenModal(true);
+  };
+
+  const handleClose = () => {
+    setOpenModal(false);
   };
 
   return (
@@ -101,15 +82,19 @@ export default function EmployeePage() {
           mb={5}
         >
           <Typography variant="h4" gutterBottom>
-            Kullanıcı
+            Çalışanlar
           </Typography>
           <Button
             variant="contained"
             startIcon={<Iconify icon="eva:plus-fill" />}
-            onClick={handleNewEmployee}
+            onClick={handleOpen}
           >
-            Yeni Kullanıcı
+            Yeni Çalışan
           </Button>
+          <NewEmployeeModalDialog
+            open={openModal}
+            close={handleClose}
+          />
         </Stack>
 
         <Card>
@@ -124,6 +109,9 @@ export default function EmployeePage() {
                 <DataGridPro
                   rows={employeeState}
                   columns={employeeColumns}
+                  localeText={{
+                    ...localeTableText,
+                  }}
                   loading={loading}
                   unstable_headerFilters
                   onFilterModelChange={handleFilterModel}

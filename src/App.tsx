@@ -6,11 +6,9 @@ import ThemeProvider from "./theme";
 // components
 import { StyledChart } from "./components/chart";
 import ScrollToTop from "./components/scroll-to-top";
-import React, { useEffect } from "react";
+import React from "react";
 import Router from "./routes";
 import { configureStoreWith } from "./app/store";
-import { Provider, useDispatch } from "react-redux";
-import { employeeList } from "./core/employee/usecase/EmployeeList";
 
 // ----------------------------------------------------------------------
 // const isAuthenticated = tokenValidation();
@@ -21,11 +19,9 @@ export default function App() {
     <HelmetProvider>
       <BrowserRouter>
         <ThemeProvider>
-          <Provider store={store}>
-            <ScrollToTop />
-            <StyledChart />
-            <Router />
-          </Provider>
+          <ScrollToTop />
+          <StyledChart />
+          <Router />
         </ThemeProvider>
       </BrowserRouter>
     </HelmetProvider>

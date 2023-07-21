@@ -1,0 +1,40 @@
+import { plPL } from "@mui/x-data-grid-pro";
+
+export const localeTableText = {
+    headerFilterOperatorContains: "İçeren",
+    headerFilterOperatorEquals: "Eşit",
+    headerFilterOperatorNotContains: "İçermeyen",
+    headerFilterOperatorStartsWith: "İle başlayan",
+    headerFilterOperatorEndsWith: "İle biten",
+    headerFilterOperatorIsEmpty: "Boş",
+    headerFilterOperatorIsNotEmpty: "Boş değil",
+
+    filterOperatorContains: "İçeren",
+    filterOperatorEquals: "Eşit",
+    filterOperatorNotContains: "İçermeyen",
+    filterOperatorStartsWith: "İle başlayan",
+    filterOperatorEndsWith: "İle biten",
+    filterOperatorIsEmpty: "Boş",
+    filterOperatorIsNotEmpty: "Boş değil",
+    filterOperatorIsAnyOf: "Herhangi biri",
+
+    ...plPL,
+    pinToLeft: "Sola sabitle",
+    pinToRight: "Sağa sabitle",
+    sortByAsc: "Artan sırala",
+    sortByDesc: "Azalan sırala",
+    columnMenuSortAsc: "Artan sırala",
+    columnMenuSortDesc: "Azalan sırala",
+    columnMenuUnsort: "Sıralamayı kaldır",
+    columnMenuFilter: "Filtrele",
+    columnMenuHideColumn: "Sütunu gizle",
+    columnMenuShowColumn: "Sütunu göster",
+    columnMenuGroupBy: "Grupla",
+    columnMenuUngroupBy: "Gruplamayı kaldır",
+    columnMenuManageColumns: "Sütunları yönet",
+    footerTotalRows: "Toplam satır: ",
+    footerTotalVisibleRows: (visibleCount: any) =>
+        `Toplam görünen satır: ${visibleCount.toLocaleString()}`,
+    footerClearFilters: "Filtreleri temizle",
+    footerShowColumns: "Sütunları göster",
+};
