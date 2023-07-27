@@ -3,13 +3,13 @@ import { Dependencies } from "../../../app/dependencies";
 import { RootState } from "../../../index";
 import { EmployeeMapper } from "../mapper/EmployeeMapper";
 import { getAll } from "../gateway/EmployeeGateway";
+import { EmployeeProps } from "../entity/Employee";
 
 export const employeeList = createAsyncThunk<
   any,
   void,
   {
     state: RootState;
-    extra: Dependencies;
   }
 >("employee/employeeList", async () => {
   const users = await getAll();

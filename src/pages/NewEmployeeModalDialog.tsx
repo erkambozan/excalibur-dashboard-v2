@@ -1,31 +1,41 @@
 import * as React from "react";
+import { useEffect } from "react";
 import Button from "@mui/material/Button";
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogTitle from "@mui/material/DialogTitle";
-import { Box, TextField } from "@mui/material";
+import {
+  Box,
+  FormControl,
+  InputLabel,
+  MenuItem,
+  Select,
+  TextField,
+} from "@mui/material";
 import ChooseHierarchy from "./ChooseHierarchy";
 import BasicModalDialogProps from "../app/BasicModalDialogProps";
-
-const style = {
-  position: "absolute" as "absolute",
-  top: "50%",
-  left: "50%",
-  transform: "translate(-50%, -50%)",
-  width: 400,
-  bgcolor: "background.paper",
-  border: "2px solid #000",
-  boxShadow: 24,
-  p: 4,
-};
+import { useDispatch, useSelector } from "react-redux";
+import { findHierarchyByPath, hierarchyReducer, hierarchySlice } from "../core/hierarchy/hierarchySlice";
+import { AppDispatch, RootState } from "../index";
+import { hierarchyList } from "../core/hierarchy/usecase/HierarchyList";
 
 export default function NewEmployeeModalDialog({
   open,
   close,
 }: BasicModalDialogProps) {
   const [openHierarchy, setOpenHierarchy] = React.useState(false);
+  const [selectedHierarchyPath, setSelectedHierarchyPath] = React.useState("");
+  const [selectedHierarchyName, setSelectedHierarchyName] = React.useState("");
+  const dispatch = useDispatch<AppDispatch>();
+  const selectedHierarchy = useSelector((state:RootState) => state.hierarchy.selectedHierarchy);
 
+  useEffect(() => {
+    if (selectedHierarchyPath !== "") {
+      // dispatch(findHierarchyByPath(selectedHierarchyPath));
+      // setSelectedHierarchyName(selectedHierarchy.getProps.name)
+    }
+  }, [selectedHierarchyPath]);
   const handleOpenHierarchy = () => {
     setOpenHierarchy(true);
   };
@@ -43,8 +53,8 @@ export default function NewEmployeeModalDialog({
         aria-describedby="alert-dialog-description"
         PaperProps={{
           sx: {
-            width: "40%",
-            height: "40%",
+            width: "100%",
+            height: "100%",
           },
         }}
       >
@@ -52,22 +62,27 @@ export default function NewEmployeeModalDialog({
         <DialogContent>
           <Box
             component="form"
+            display={"flex"}
+            flexDirection={"column"}
             sx={{
               "& .MuiTextField-root": { m: 1, width: "25ch" },
             }}
             noValidate
             autoComplete="off"
           >
-            <TextField
-              id="outlined-multiline-flexible"
-              label="Çalışan Kullanıcı ID"
-              maxRows={4}
-            />
+            <Box>
+              <TextField
+                id="outlined-multiline-flexible"
+                label="Çalışan Kullanıcı ID"
+                maxRows={4}
+              />
+            </Box>
             <Box display="flex" alignItems="center">
               <TextField
                 id="outlined-multiline-flexible"
                 label="Çalışacağı bölüm"
                 maxRows={4}
+                value={selectedHierarchyName}
               />
               <Button
                 variant="text"
@@ -76,24 +91,36 @@ export default function NewEmployeeModalDialog({
               >
                 Bölüm Seç
               </Button>
-              <ChooseHierarchy open={openHierarchy} close={handleCloseHierarchy}/>
+              <ChooseHierarchy
+                open={openHierarchy}
+                close={handleCloseHierarchy}
+                selectedNode={selectedHierarchyPath}
+                setSelectedNode={setSelectedHierarchyPath}
+              />
             </Box>
-            <TextField
-              id="outlined-multiline-flexible"
-              label="Çalışan Tipi"
-              maxRows={4}
-            />
+            <Box>
+              <FormControl fullWidth style={{ margin: "8px" }}>
+                <InputLabel id="demo-simple-select-label">
+                  Çalışan Türü
+                </InputLabel>
+                <Select
+                  labelId="demo-simple-select-label"
+                  id="demo-simple-select"
+                  label="Çalışan Türü"
+                >
+                  <MenuItem value={10}>Yönetici</MenuItem>
+                  <MenuItem value={20}>İşçi</MenuItem>
+                  <MenuItem value={30}>Şoför</MenuItem>
+                </Select>
+              </FormControl>
+            </Box>
           </Box>
         </DialogContent>
         <DialogActions>
           <Button variant="outlined" color={"error"} onClick={() => close()}>
             Kapat
           </Button>
-          <Button
-            variant="outlined"
-            color={"primary"}
-            onClick={() => close()}
-          >
+          <Button variant="outlined" color={"primary"} onClick={() => close()}>
             Kaydet
           </Button>
         </DialogActions>

@@ -1,14 +1,13 @@
-import { Navigate, Route, Routes } from "react-router-dom";
+import {Navigate, Route, Routes} from "react-router-dom";
 // layouts
 import DashboardLayout from "./layouts/dashboard";
 import SimpleLayout from "./layouts/simple";
 //
-import BlogPage from "./pages/BlogPage";
 import UserPage from "./pages/UserPage";
 import LoginPage from "./pages/LoginPage";
 import Page404 from "./pages/Page404";
 import DashboardAppPage from "./pages/DashboardAppPage";
-import { ProtectedRoute } from "./ProtectedRoute";
+import {ProtectedRoute} from "./ProtectedRoute";
 import {useDispatch, useSelector} from "react-redux";
 import React, {useEffect} from "react";
 import {authSlice} from "./core/auth/authSlice";
@@ -20,7 +19,7 @@ export default function Router() {
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(authSlice.actions.isAuth());
-  }, [dispatch]);
+  }, []);
   const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
 
   const ProtectedRouteWrapper = (props) => (

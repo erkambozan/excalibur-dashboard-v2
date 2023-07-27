@@ -24,6 +24,7 @@ import { employeeList } from "../core/employee/usecase/EmployeeList";
 import { employeeColumns } from "../core/employee/entity/Employee";
 import { localeTableText } from "../app/tableLocale";
 import NewEmployeeModalDialog from "./NewEmployeeModalDialog";
+import { hierarchyList } from "../core/hierarchy/usecase/HierarchyList";
 
 export default function EmployeePage() {
   const [open, setOpen] = useState(null);
@@ -41,7 +42,7 @@ export default function EmployeePage() {
   useEffect(() => {
     dispatch(employeeList());
     setEmployeeState(employees);
-  }, [dispatch]);
+  }, [employees.length <= 0]);
 
   const handleCloseMenu = () => {
     setOpen(null);
@@ -91,10 +92,7 @@ export default function EmployeePage() {
           >
             Yeni Çalışan
           </Button>
-          <NewEmployeeModalDialog
-            open={openModal}
-            close={handleClose}
-          />
+          <NewEmployeeModalDialog open={openModal} close={handleClose} />
         </Stack>
 
         <Card>
