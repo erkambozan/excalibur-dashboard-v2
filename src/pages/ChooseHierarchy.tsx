@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useReducer } from "react";
 import SvgIcon, { SvgIconProps } from "@mui/material/SvgIcon";
 import TreeView from "@mui/lab/TreeView";
 import TreeItem, { treeItemClasses, TreeItemProps } from "@mui/lab/TreeItem";
@@ -6,7 +6,6 @@ import Collapse from "@mui/material/Collapse";
 import { animated, useSpring } from "@react-spring/web";
 import { alpha, styled } from "@mui/material/styles";
 import { TransitionProps } from "@mui/material/transitions";
-import BasicModalDialogProps from "../app/BasicModalDialogProps";
 import Dialog from "@mui/material/Dialog";
 import DialogContent from "@mui/material/DialogContent";
 import { hierarchyList } from "../core/hierarchy/usecase/HierarchyList";
@@ -14,6 +13,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../index";
 import { TreeNode } from "../core/hierarchy/entity/Hierarchy";
 import { HierarchyMapper } from "../core/hierarchy/mapper/HierarchyMapper";
+import BasicModalDialogProps from "../app/BasicModalDialogProps";
+import { hierarchyReducer, setSelectHierarchy } from "../core/hierarchy/hierarchySlice";
 
 function MinusSquare(props: SvgIconProps) {
   return (
@@ -95,19 +96,12 @@ const convertToTree = (data: TreeNode[]): TreeNode[] => {
   return rootItems.map(createTree);
 };
 
-interface ChooseHierarchyProps extends BasicModalDialogProps {
-  selectedNode: string;
-  setSelectedNode: (nodeId: string) => void;
-}
-
 export default function ChooseHierarchy({
   open,
   close,
-  selectedNode,
-  setSelectedNode,
-}: ChooseHierarchyProps) {
-  const hierarchies = useSelector(
-    (state: RootState) => state.hierarchy.hierarchies
+}: BasicModalDialogProps ) {
+  const {hierarchies, selectedHierarchy} = useSelector(
+    (state: RootState) => state.hierarchy
   );
   const dispatch = useDispatch<AppDispatch>();
 
@@ -127,7 +121,7 @@ export default function ChooseHierarchy({
   );
 
   const handleNodeSelect = (event: React.ChangeEvent<{}>, nodeId: string) => {
-    setSelectedNode(nodeId);
+    dispatch(setSelectHierarchy(nodeId));
   };
 
   return (
@@ -151,7 +145,6 @@ export default function ChooseHierarchy({
             defaultCollapseIcon={<MinusSquare />}
             defaultExpandIcon={<PlusSquare />}
             defaultEndIcon={<CloseSquare />}
-            selected={selectedNode}
             onNodeSelect={handleNodeSelect}
             sx={{ height: 264, flexGrow: 1, maxWidth: 400, overflowY: "auto" }}
           >

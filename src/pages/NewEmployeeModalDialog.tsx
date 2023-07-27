@@ -1,5 +1,4 @@
 import * as React from "react";
-import { useEffect } from "react";
 import Button from "@mui/material/Button";
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
@@ -16,26 +15,19 @@ import {
 import ChooseHierarchy from "./ChooseHierarchy";
 import BasicModalDialogProps from "../app/BasicModalDialogProps";
 import { useDispatch, useSelector } from "react-redux";
-import { findHierarchyByPath, hierarchyReducer, hierarchySlice } from "../core/hierarchy/hierarchySlice";
 import { AppDispatch, RootState } from "../index";
-import { hierarchyList } from "../core/hierarchy/usecase/HierarchyList";
+import { setSelectHierarchy } from "../core/hierarchy/hierarchySlice";
 
 export default function NewEmployeeModalDialog({
   open,
   close,
 }: BasicModalDialogProps) {
   const [openHierarchy, setOpenHierarchy] = React.useState(false);
-  const [selectedHierarchyPath, setSelectedHierarchyPath] = React.useState("");
-  const [selectedHierarchyName, setSelectedHierarchyName] = React.useState("");
   const dispatch = useDispatch<AppDispatch>();
-  const selectedHierarchy = useSelector((state:RootState) => state.hierarchy.selectedHierarchy);
+  const selectedHierarchy = useSelector(
+    (state: RootState) => state.hierarchy.selectedHierarchy
+  );
 
-  useEffect(() => {
-    if (selectedHierarchyPath !== "") {
-      // dispatch(findHierarchyByPath(selectedHierarchyPath));
-      // setSelectedHierarchyName(selectedHierarchy.getProps.name)
-    }
-  }, [selectedHierarchyPath]);
   const handleOpenHierarchy = () => {
     setOpenHierarchy(true);
   };
@@ -82,7 +74,8 @@ export default function NewEmployeeModalDialog({
                 id="outlined-multiline-flexible"
                 label="Çalışacağı bölüm"
                 maxRows={4}
-                value={selectedHierarchyName}
+                InputLabelProps={{ shrink: true }}
+                value={selectedHierarchy.name}
               />
               <Button
                 variant="text"
@@ -94,8 +87,6 @@ export default function NewEmployeeModalDialog({
               <ChooseHierarchy
                 open={openHierarchy}
                 close={handleCloseHierarchy}
-                selectedNode={selectedHierarchyPath}
-                setSelectedNode={setSelectedHierarchyPath}
               />
             </Box>
             <Box>

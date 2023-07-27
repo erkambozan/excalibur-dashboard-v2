@@ -13,7 +13,7 @@ export const hierarchySlice = createSlice({
   name: "hierarchy",
   initialState,
   reducers: {
-    findHierarchyByPath: (state = initialState, action) => {
+    setSelectHierarchy: (state = initialState, action) => {
       const hierarchyPath = action.payload;
       const hierarchy = state.hierarchies.find(
         (hierarchy) => hierarchy.path === hierarchyPath
@@ -31,4 +31,4 @@ export const hierarchySlice = createSlice({
 });
 
 export const hierarchyReducer = hierarchySlice.reducer;
-export const { findHierarchyByPath } = hierarchySlice.actions;
+export const { setSelectHierarchy } = hierarchySlice.actions;

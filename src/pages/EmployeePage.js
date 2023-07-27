@@ -24,7 +24,6 @@ import { employeeList } from "../core/employee/usecase/EmployeeList";
 import { employeeColumns } from "../core/employee/entity/Employee";
 import { localeTableText } from "../app/tableLocale";
 import NewEmployeeModalDialog from "./NewEmployeeModalDialog";
-import { hierarchyList } from "../core/hierarchy/usecase/HierarchyList";
 
 export default function EmployeePage() {
   const [open, setOpen] = useState(null);
