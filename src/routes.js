@@ -1,27 +1,34 @@
-import {Navigate, Route, Routes} from "react-router-dom";
+import { Navigate, Route, Routes } from "react-router-dom";
 // layouts
 import DashboardLayout from "./layouts/dashboard";
-import SimpleLayout from "./layouts/simple";
 //
 import UserPage from "./pages/UserPage";
 import LoginPage from "./pages/LoginPage";
 import Page404 from "./pages/Page404";
 import DashboardAppPage from "./pages/DashboardAppPage";
-import {ProtectedRoute} from "./ProtectedRoute";
-import {useDispatch, useSelector} from "react-redux";
-import React, {useEffect} from "react";
-import {authSlice} from "./core/auth/authSlice";
+import { ProtectedRoute } from "./ProtectedRoute";
+import React, { useEffect } from "react";
 import EmployeePage from "./pages/EmployeePage";
+import HierarchyPage from "./pages/HierarchyPage";
+import { tokenValidation } from "./app/tokenValidation";
+import { useDispatch, useSelector } from "react-redux";
+import { isAuth } from "./core/auth/authSlice";
 
 // ----------------------------------------------------------------------
 
 export default function Router() {
+  const isAuthenticated = tokenValidation();
   const dispatch = useDispatch();
-  useEffect(() => {
-    dispatch(authSlice.actions.isAuth());
-  }, []);
-  const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
+  const { isA } = useSelector((state) => state.auth);
 
+  useEffect(() => {
+    dispatch(isAuth());
+    isAuthenticated
+      ? console.log("Authenticated")
+      : console.log("Not Authenticated");
+
+
+  }, [isAuthenticated]);
   const ProtectedRouteWrapper = (props) => (
     <ProtectedRoute authenticated={isAuthenticated} {...props} />
   );
@@ -35,13 +42,11 @@ export default function Router() {
             <Route path="app" element={<DashboardAppPage />} />
             <Route path="user" element={<UserPage />} />
             <Route path="employee" element={<EmployeePage />} />
+            <Route path="hierarchy" element={<HierarchyPage />} />
           </Route>
-          <Route element={<SimpleLayout />}>
-            <Route element={<Navigate to="/dashboard/app" />} index />
-            <Route path="404" element={<Page404 />} />
-            <Route path="*" element={<Navigate to="/404" />} />
-          </Route>
-          <Route path="*" element={<Navigate to="/404" replace />} />
+          <Route element={<Navigate to="/dashboard/app" />} index />
+          <Route path="404" element={<Page404 />} />
+          <Route path="*" element={<Navigate to="/404" />} />
         </Routes>
       </ProtectedRouteWrapper>
       <Routes>

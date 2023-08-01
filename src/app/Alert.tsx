@@ -1,6 +1,7 @@
 import React, { useState } from "react";
-import Snackbar from "@material-ui/core/Snackbar";
-import Alert from "@material-ui/lab/Alert";
+import Snackbar from '@mui/material/Snackbar';
+import Alert from "@mui/material/Alert";
+import { Box } from "@mui/material";
 
 interface AlertMassageProps {
   key: number;
@@ -8,7 +9,7 @@ interface AlertMassageProps {
   severity: string;
 }
 
-const severityMapping: Record<string, any> = {
+export const severityMapping: Record<string, any> = {
   success: "success",
   info: "info",
   warning: "warning",
@@ -29,19 +30,21 @@ export default function AlertMessage({
   const alertSeverity = severityMapping[severity] || "warning";
 
   return (
-    <Snackbar
-      key={key}
-      anchorOrigin={{
-        vertical: "top",
-        horizontal: "right",
-      }}
-      open={open}
-      autoHideDuration={2000}
-      onClose={handleClose}
-    >
-      <Alert severity={alertSeverity} onClose={handleClose}>
-        {message}
-      </Alert>
-    </Snackbar>
+    <Box>
+      <Snackbar
+        key={key}
+        anchorOrigin={{
+          vertical: "top",
+          horizontal: "right",
+        }}
+        open={open}
+        autoHideDuration={2000}
+        onClose={handleClose}
+      >
+        <Alert severity={alertSeverity} onClose={handleClose}>
+          {message}
+        </Alert>
+      </Snackbar>
+    </Box>
   );
 }

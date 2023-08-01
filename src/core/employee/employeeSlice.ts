@@ -1,11 +1,11 @@
-import { EmployeeEntity, EmployeeProps } from "./entity/Employee";
+import { EmployeeProps } from "./entity/Employee";
 import { createSlice } from "@reduxjs/toolkit";
 import { employeeList } from "./usecase/EmployeeList";
 
 export const initialState = {
   employees: [] as EmployeeProps[],
   loading: false,
-  error: null,
+  error: "",
 };
 
 export const employeeSlice = createSlice({
@@ -17,9 +17,12 @@ export const employeeSlice = createSlice({
       state.employees = action.payload;
       state.loading = false;
     });
-
     builder.addCase(employeeList.pending, (state, action) => {
       state.loading = true;
+    });
+    builder.addCase(employeeList.rejected, (state, action) => {
+      state.loading = false;
+      state.error = action.error.message!;
     });
   },
 });

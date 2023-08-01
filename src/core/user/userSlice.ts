@@ -1,9 +1,10 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { userList } from "./usecase/UserList";
-import { UserEntity } from "./entity/User";
+import { CreateUserProps, UserProps } from "./entity/User";
 
 export const initialState = {
-  users: [] as UserEntity[],
+  users: [] as UserProps[],
+  selectedUser: {} as UserProps,
   loading: false,
   error: null,
 };
@@ -11,7 +12,11 @@ export const initialState = {
 export const userSlice = createSlice({
   name: "user",
   initialState,
-  reducers: {},
+  reducers: {
+    selectUser: (state=initialState, action) => {
+      state.selectedUser = action.payload;
+    },
+  },
   extraReducers: (builder) => {
     builder.addCase(userList.fulfilled, (state, action) => {
       state.users = action.payload;
@@ -20,3 +25,4 @@ export const userSlice = createSlice({
 });
 
 export const userReducer = userSlice.reducer;
+export const { selectUser } = userSlice.actions;

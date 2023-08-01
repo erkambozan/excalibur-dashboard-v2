@@ -1,10 +1,12 @@
 import * as React from "react";
+import { useEffect } from "react";
 import Button from "@mui/material/Button";
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogTitle from "@mui/material/DialogTitle";
 import {
+  Autocomplete,
   Box,
   FormControl,
   InputLabel,
@@ -16,9 +18,12 @@ import ChooseHierarchy from "./ChooseHierarchy";
 import BasicModalDialogProps from "../app/BasicModalDialogProps";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../index";
-import { setSelectHierarchy } from "../core/hierarchy/hierarchySlice";
+import { userList } from "../core/user/usecase/UserList";
+import { selectUser } from "../core/user/userSlice";
+import { employeeCreate } from "../core/employee/usecase/EmployeeCreate";
+import AlertMessage, { severityMapping } from "../app/Alert";
 
-export default function NewEmployeeModalDialog({
+export default function CreateEmployeeModal({
   open,
   close,
 }: BasicModalDialogProps) {
@@ -27,6 +32,15 @@ export default function NewEmployeeModalDialog({
   const selectedHierarchy = useSelector(
     (state: RootState) => state.hierarchy.selectedHierarchy
   );
+  const { users, selectedUser } = useSelector((state: RootState) => state.user);
+  const [status, setStatusBase] = React.useState({
+    key: 0,
+    message: "",
+    severity: "",
+  });
+  useEffect(() => {
+    dispatch(userList());
+  }, [users.length <= 0]);
 
   const handleOpenHierarchy = () => {
     setOpenHierarchy(true);
@@ -34,6 +48,36 @@ export default function NewEmployeeModalDialog({
 
   const handleCloseHierarchy = () => {
     setOpenHierarchy(false);
+  };
+
+  const handleSelectedUser = (event: any, value: any) => {
+    dispatch(selectUser(value));
+  };
+
+  const handleSubmit = () => {
+    const data = {
+      hierarchyId: selectedHierarchy.id,
+      hierarchyPath: selectedHierarchy.path,
+      workType: "Yönetici",
+      userId: selectedUser.id,
+    } as any;
+
+    dispatch(employeeCreate(data))
+      .unwrap()
+      .then(() => {
+        setStatusBase({
+          key: Math.random(),
+          message: "Çalışan Oluşturuldu",
+          severity: severityMapping.success,
+        });
+      })
+      .catch(() => {
+        setStatusBase({
+          key: Math.random(),
+          message: "Çalışan Oluşturulamadı",
+          severity: severityMapping.error,
+        });
+      });
   };
 
   return (
@@ -63,11 +107,43 @@ export default function NewEmployeeModalDialog({
             autoComplete="off"
           >
             <Box>
-              <TextField
-                id="outlined-multiline-flexible"
-                label="Çalışan Kullanıcı ID"
-                maxRows={4}
-              />
+              <Box>
+                <Autocomplete
+                  disablePortal
+                  id="combo-box-demo"
+                  options={users}
+                  sx={{ width: 300 }}
+                  getOptionLabel={(option) => option.firstName}
+                  onChange={(event, value) => handleSelectedUser(event, value)}
+                  filterOptions={(options, { inputValue }) => {
+                    return options.filter((option) =>
+                      option.firstName
+                        .toLowerCase()
+                        .includes(inputValue.toLowerCase())
+                    );
+                  }}
+                  renderOption={(props, option, { selected }) => (
+                    <li {...props}>
+                      <Box
+                        sx={{
+                          flexGrow: 1,
+                        }}
+                      >
+                        {option.firstName}
+                        <br />
+                        <span>{option.email}</span>
+                      </Box>
+                    </li>
+                  )}
+                  renderInput={(params) => (
+                    <TextField
+                      ref={params.InputProps.ref}
+                      inputProps={params.inputProps}
+                      placeholder="Kullanıcı Tanımla"
+                    />
+                  )}
+                />
+              </Box>
             </Box>
             <Box display="flex" alignItems="center">
               <TextField
@@ -111,10 +187,15 @@ export default function NewEmployeeModalDialog({
           <Button variant="outlined" color={"error"} onClick={() => close()}>
             Kapat
           </Button>
-          <Button variant="outlined" color={"primary"} onClick={() => close()}>
+          <Button
+            variant="outlined"
+            color={"primary"}
+            onClick={() => handleSubmit()}
+          >
             Kaydet
           </Button>
         </DialogActions>
+        {status.message != "" ? <AlertMessage {...status} /> : null}
       </Dialog>
     </React.Fragment>
   );

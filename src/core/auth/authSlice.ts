@@ -1,6 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { loginUser } from "./usecase/loginUser";
 import { tokenValidation } from "../../app/tokenValidation";
+import { useNavigate } from "react-router-dom";
 
 interface UserState {
   token: string; // Replace 'any' with the actual type of your user data
@@ -24,7 +25,7 @@ export const authSlice = createSlice({
       state.token = "";
       state.error = null;
       state.loading = false;
-      sessionStorage.setItem("token", "");
+      localStorage.setItem("token", "");
       state.isAuthenticated = false;
       window.open("/login", "_self");
     },
@@ -54,3 +55,4 @@ export const authSlice = createSlice({
 });
 
 export const { logout } = authSlice.actions;
+export const { isAuth } = authSlice.actions;

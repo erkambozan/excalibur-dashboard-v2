@@ -6,7 +6,7 @@ interface DecodedToken {
 
 export const tokenValidation = (): boolean => {
   try {
-    const token = sessionStorage.getItem("token");
+    const token = localStorage.getItem("token");
     const decodedToken = jwt_decode<DecodedToken>(token ?? "");
     const currentDate = new Date();
 

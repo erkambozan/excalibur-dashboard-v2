@@ -1,16 +1,15 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { Dependencies } from "../../../app/dependencies";
 import { RootState } from "../../../index";
 import { UserMapper } from "../mapper/UserMapper";
+import { getAll } from "../gateway/UserGateway";
 
 export const userList = createAsyncThunk<
   any,
   void,
   {
     state: RootState;
-    extra: Dependencies;
   }
->("user/userList", async (any, { extra: { userGatewayPort } }) => {
-  const users = await userGatewayPort.getAll();
-  return UserMapper.toEntity(users[0]);
+>("user/userList", async (any) => {
+  const response = await getAll();
+  return UserMapper.toViewModelList(response.data);
 });

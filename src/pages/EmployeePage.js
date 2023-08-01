@@ -23,7 +23,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { employeeList } from "../core/employee/usecase/EmployeeList";
 import { employeeColumns } from "../core/employee/entity/Employee";
 import { localeTableText } from "../app/tableLocale";
-import NewEmployeeModalDialog from "./NewEmployeeModalDialog";
+import CreateEmployeeModal from "./CreateEmployeeModal";
 
 export default function EmployeePage() {
   const [open, setOpen] = useState(null);
@@ -71,7 +71,7 @@ export default function EmployeePage() {
   return (
     <>
       <Helmet>
-        <title> Kullanıcı | Tommy Life </title>
+        <title> Çalışan | Tommy Life </title>
       </Helmet>
 
       <Container>
@@ -91,7 +91,7 @@ export default function EmployeePage() {
           >
             Yeni Çalışan
           </Button>
-          <NewEmployeeModalDialog open={openModal} close={handleClose} />
+          <CreateEmployeeModal open={openModal} close={handleClose} />
         </Stack>
 
         <Card>
