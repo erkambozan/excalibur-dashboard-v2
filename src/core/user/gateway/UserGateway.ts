@@ -9,7 +9,7 @@ export const getAll = async () => {
 
 export const create = async (data: any) => {
   return await axiosInstance.post(
-    process.env.REACT_APP_BASE_BACKEND + routesV1.version + routesV1.user.list,
+    process.env.REACT_APP_BASE_BACKEND + routesV1.version + routesV1.user.create,
     data
   );
 };

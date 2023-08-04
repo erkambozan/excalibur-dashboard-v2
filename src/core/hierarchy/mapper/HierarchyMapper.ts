@@ -12,7 +12,7 @@ export class HierarchyMapper {
     };
   }
 
-  static toViewModeList(props: any[]): HierarchyProps[] {
+  static toViewModelList(props: any[]): HierarchyProps[] {
     return props.map((item) => {
       return {
         id: item.id,

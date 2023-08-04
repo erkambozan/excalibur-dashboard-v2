@@ -1,5 +1,13 @@
 import { AggregateID, EntityBase } from "../../../app/ddd/entity.base";
-import { AggregateRoot } from "../../../app/ddd/aggregate-root.base";
+
+export interface UserCreateRequestProps{
+    email: string;
+    userName: string;
+    firstName: string;
+    lastName: string;
+    phone: string;
+    password: string;
+}
 
 export interface UserProps {
   id: string;

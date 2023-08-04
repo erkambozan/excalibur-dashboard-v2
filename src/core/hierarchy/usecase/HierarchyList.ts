@@ -11,5 +11,5 @@ export const hierarchyList = createAsyncThunk<
   }
 >("hierarchy/hierarchyList", async (any) => {
   const hierarchies = await getAll();
-  return HierarchyMapper.toViewModeList(hierarchies.data);
+  return HierarchyMapper.toViewModelList(hierarchies.data);
 });

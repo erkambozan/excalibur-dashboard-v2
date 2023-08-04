@@ -7,6 +7,8 @@ export const initialState = {
   loading: false,
   error: null,
   selectedHierarchy: {} as HierarchyProps,
+  name: "",
+  type: "",
 };
 
 export const hierarchySlice = createSlice({
@@ -22,6 +24,12 @@ export const hierarchySlice = createSlice({
         state.selectedHierarchy = hierarchy;
       }
     },
+    setName: (state = initialState, action) => {
+      state.name = action.payload;
+    },
+    setType: (state = initialState, action) => {
+      state.type = action.payload;
+    },
   },
   extraReducers: (builder) => {
     builder.addCase(hierarchyList.fulfilled, (state, action) => {
@@ -31,4 +39,4 @@ export const hierarchySlice = createSlice({
 });
 
 export const hierarchyReducer = hierarchySlice.reducer;
-export const { setSelectHierarchy } = hierarchySlice.actions;
+export const { setSelectHierarchy, setName, setType } = hierarchySlice.actions;

@@ -5,7 +5,7 @@ import { UserMapper } from "../mapper/UserMapper";
 
 export const userCreate = createAsyncThunk<
     any,
-    void,
+    any,
     {
         state: RootState;
     }

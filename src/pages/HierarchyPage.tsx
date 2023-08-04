@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import SvgIcon, { SvgIconProps } from "@mui/material/SvgIcon";
 import TreeView from "@mui/lab/TreeView";
 import TreeItem, { treeItemClasses, TreeItemProps } from "@mui/lab/TreeItem";
@@ -12,9 +12,8 @@ import { AppDispatch, RootState } from "../index";
 import { TreeNode } from "../core/hierarchy/entity/Hierarchy";
 import { HierarchyMapper } from "../core/hierarchy/mapper/HierarchyMapper";
 import { setSelectHierarchy } from "../core/hierarchy/hierarchySlice";
-import { Button, Container, Stack, Typography } from "@mui/material";
-import Iconify from "../components/iconify";
-import CreateEmployeeModal from "./CreateEmployeeModal";
+import { Button, Container, Stack } from "@mui/material";
+import CreateHierarchyModal from "./CreateHierarchyModal";
 
 function MinusSquare(props: SvgIconProps) {
   return (
@@ -101,6 +100,7 @@ export default function HierarchyPage() {
     (state: RootState) => state.hierarchy
   );
   const dispatch = useDispatch<AppDispatch>();
+  const [openModal, setOpenModal] = useState(false);
 
   useEffect(() => {
     dispatch(hierarchyList());
@@ -121,6 +121,14 @@ export default function HierarchyPage() {
     dispatch(setSelectHierarchy(nodeId));
   };
 
+  const handleOpenModal = () => {
+    setOpenModal(true);
+  };
+
+  const handleCloseModal = () => {
+    setOpenModal(false);
+  };
+
   return (
     <React.Fragment>
       <Container>
@@ -130,11 +138,10 @@ export default function HierarchyPage() {
           justifyContent="flex-end"
           mb={5}
         >
-          <Button
-            variant="contained"
-          >
+          <Button variant="contained" onClick={handleOpenModal}>
             Ekle
           </Button>
+          <CreateHierarchyModal open={openModal} close={handleCloseModal} />
         </Stack>
       </Container>
       <TreeView

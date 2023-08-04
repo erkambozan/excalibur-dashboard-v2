@@ -23,9 +23,12 @@ import { localeTableText } from "../app/tableLocale";
 import { userColumns } from "../core/user/entity/User";
 import {useDispatch, useSelector} from "react-redux";
 import { userList } from "../core/user/usecase/UserList";
+import CreateUserModal from "./CreateUserModal";
 
 export default function UserPage() {
   const [open, setOpen] = useState(null);
+
+    const [openModal, setOpenModal] = useState(false);
 
   const [page, setPage] = useState(0);
 
@@ -55,6 +58,11 @@ export default function UserPage() {
     console.log(filterModel.items.map((item) => item));
   };
 
+  const handleCloseModal = () => {
+    setOpenModal(false);
+  };
+
+
   return (
     <>
       <Helmet>
@@ -74,9 +82,11 @@ export default function UserPage() {
           <Button
             variant="contained"
             startIcon={<Iconify icon="eva:plus-fill" />}
+            onClick={() => setOpenModal(true)}
           >
             Yeni Kullanıcı
           </Button>
+          <CreateUserModal open={openModal} close={handleCloseModal}/>
         </Stack>
 
         <Card>
