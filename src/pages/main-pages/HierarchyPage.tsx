@@ -6,14 +6,14 @@ import Collapse from "@mui/material/Collapse";
 import { animated, useSpring } from "@react-spring/web";
 import { alpha, styled } from "@mui/material/styles";
 import { TransitionProps } from "@mui/material/transitions";
-import { hierarchyList } from "../core/hierarchy/usecase/HierarchyList";
+import { hierarchyList } from "../../core/hierarchy/usecase/HierarchyList";
 import { useDispatch, useSelector } from "react-redux";
-import { AppDispatch, RootState } from "../index";
-import { TreeNode } from "../core/hierarchy/entity/Hierarchy";
-import { HierarchyMapper } from "../core/hierarchy/mapper/HierarchyMapper";
-import { setSelectHierarchy } from "../core/hierarchy/hierarchySlice";
+import { AppDispatch, RootState } from "../../index";
+import { TreeNode } from "../../core/hierarchy/entity/Hierarchy";
+import { HierarchyMapper } from "../../core/hierarchy/mapper/HierarchyMapper";
+import { setSelectHierarchy } from "../../core/hierarchy/hierarchySlice";
 import { Button, Container, Stack } from "@mui/material";
-import CreateHierarchyModal from "./CreateHierarchyModal";
+import CreateHierarchyModal from "../modals/CreateHierarchyModal";
 
 function MinusSquare(props: SvgIconProps) {
   return (
@@ -66,7 +66,7 @@ function TransitionComponent(props: TransitionProps) {
   );
 }
 
-const StyledTreeItem = styled((props: TreeItemProps) => (
+const   StyledTreeItem = styled((props: TreeItemProps) => (
   <TreeItem {...props} TransitionComponent={TransitionComponent} />
 ))(({ theme }) => ({
   [`& .${treeItemClasses.iconContainer}`]: {
@@ -110,7 +110,7 @@ export default function HierarchyPage() {
     HierarchyMapper.toTreeNode(hierarchies)
   );
   const renderTree = (nodes: TreeNode) => (
-    <StyledTreeItem key={nodes.id} nodeId={nodes.path} label={nodes.name}>
+    <StyledTreeItem key={nodes.id} nodeId={nodes.path} label={nodes.name} endIcon={<CloseSquare />}>
       {Array.isArray(nodes.children)
         ? nodes.children.map((node) => renderTree(node))
         : null}
@@ -149,7 +149,7 @@ export default function HierarchyPage() {
         defaultExpanded={["1"]}
         defaultCollapseIcon={<MinusSquare />}
         defaultExpandIcon={<PlusSquare />}
-        defaultEndIcon={<CloseSquare />}
+        // defaultEndIcon={<CloseSquare />}
         onNodeSelect={handleNodeSelect}
         sx={{ height: 264, flexGrow: 1, maxWidth: 400, overflowY: "auto" }}
       >

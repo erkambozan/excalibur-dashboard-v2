@@ -4,15 +4,9 @@ import AccountTreeIcon from "@mui/icons-material/AccountTree";
 import PersonIcon from "@mui/icons-material/Person";
 import GridViewIcon from "@mui/icons-material/GridView";
 import BadgeIcon from "@mui/icons-material/Badge";
+import ContactMailIcon from '@mui/icons-material/ContactMail';
 
 // ----------------------------------------------------------------------
-
-const icon = (name) => (
-  <SvgColor
-    src={`/assets/icons/navbar/${name}.svg`}
-    sx={{ width: 1, height: 1 }}
-  />
-);
 
 const navConfig = [
   {
@@ -34,6 +28,11 @@ const navConfig = [
     title: "hiyerarşi",
     path: "/dashboard/hierarchy",
     icon: <AccountTreeIcon />,
+  },
+  {
+    title: "Yıllık İzin",
+    path: "/dashboard/annualleave",
+    icon: <ContactMailIcon />,
   },
 ];
 

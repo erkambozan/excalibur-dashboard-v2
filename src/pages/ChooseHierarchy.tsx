@@ -144,7 +144,7 @@ export default function ChooseHierarchy({
             defaultExpanded={["1"]}
             defaultCollapseIcon={<MinusSquare />}
             defaultExpandIcon={<PlusSquare />}
-            defaultEndIcon={<CloseSquare />}
+            // defaultEndIcon={<CloseSquare />}
             onNodeSelect={handleNodeSelect}
             sx={{ height: 264, flexGrow: 1, maxWidth: 400, overflowY: "auto" }}
           >

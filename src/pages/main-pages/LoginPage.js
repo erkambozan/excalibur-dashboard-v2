@@ -4,9 +4,9 @@ import { styled } from "@mui/material/styles";
 import { Container, Divider, Typography } from "@mui/material";
 // hooks
 // components
-import Logo from "../components/logo";
+import Logo from "../../components/logo";
 // sections
-import { LoginForm } from "../sections/auth/login";
+import { LoginForm } from "../../sections/auth/login";
 
 // ----------------------------------------------------------------------
 

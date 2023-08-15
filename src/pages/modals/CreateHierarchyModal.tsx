@@ -5,13 +5,13 @@ import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogTitle from "@mui/material/DialogTitle";
 import { Box, TextField } from "@mui/material";
-import BasicModalDialogProps from "../app/BasicModalDialogProps";
+import BasicModalDialogProps from "../../app/BasicModalDialogProps";
 import { useDispatch, useSelector } from "react-redux";
-import { AppDispatch, RootState } from "../index";
-import AlertMessage from "../app/Alert";
-import ChooseHierarchy from "./ChooseHierarchy";
-import { setName, setType } from "../core/hierarchy/hierarchySlice";
-import { hierarchyCreate } from "../core/hierarchy/usecase/HierarchyCreate";
+import { AppDispatch, RootState } from "../../index";
+import AlertMessage from "../../app/Alert";
+import ChooseHierarchy from "../ChooseHierarchy";
+import { setName, setType } from "../../core/hierarchy/hierarchySlice";
+import { hierarchyCreate } from "../../core/hierarchy/usecase/HierarchyCreate";
 
 export default function CreateHierarchyModal({
   open,

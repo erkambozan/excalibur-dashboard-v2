@@ -12,6 +12,6 @@ export const employeeList = createAsyncThunk<
     state: RootState;
   }
 >("employee/employeeList", async () => {
-  const users = await getAll();
-  return EmployeeMapper.toViewModel(users.data);
+  const employees = await getAll();
+  return EmployeeMapper.toViewModel(employees.data);
 });

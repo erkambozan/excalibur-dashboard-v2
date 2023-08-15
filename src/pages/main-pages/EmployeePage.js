@@ -13,17 +13,16 @@ import {
   Typography,
 } from "@mui/material";
 // components
-import Iconify from "../components/iconify";
-import Scrollbar from "../components/scrollbar";
+import Iconify from "../../components/iconify";
+import Scrollbar from "../../components/scrollbar";
 // sections
 // mock
-import USERLIST from "../_mock/user";
 import { DataGridPro } from "@mui/x-data-grid-pro";
 import { useDispatch, useSelector } from "react-redux";
-import { employeeList } from "../core/employee/usecase/EmployeeList";
-import { employeeColumns } from "../core/employee/entity/Employee";
-import { localeTableText } from "../app/tableLocale";
-import CreateEmployeeModal from "./CreateEmployeeModal";
+import { employeeList } from "../../core/employee/usecase/EmployeeList";
+import { employeeColumns } from "../../core/employee/entity/Employee";
+import { localeTableText } from "../../app/tableLocale";
+import CreateEmployeeModal from "../modals/CreateEmployeeModal";
 
 export default function EmployeePage() {
   const [open, setOpen] = useState(null);
@@ -121,7 +120,7 @@ export default function EmployeePage() {
           <TablePagination
             rowsPerPageOptions={[5, 10, 25]}
             component="div"
-            count={USERLIST.length}
+            count={employees.length}
             rowsPerPage={rowsPerPage}
             page={page}
             onPageChange={handleChangePage}

@@ -13,17 +13,17 @@ import {
   Typography,
 } from "@mui/material";
 // components
-import Iconify from "../components/iconify";
-import Scrollbar from "../components/scrollbar";
+import Iconify from "../../components/iconify";
+import Scrollbar from "../../components/scrollbar";
 // sections
 // mock
-import USERLIST from "../_mock/user";
+import USERLIST from "../../_mock/user";
 import { DataGridPro } from "@mui/x-data-grid-pro";
-import { localeTableText } from "../app/tableLocale";
-import { userColumns } from "../core/user/entity/User";
+import { localeTableText } from "../../app/tableLocale";
+import { userColumns } from "../../core/user/entity/User";
 import {useDispatch, useSelector} from "react-redux";
-import { userList } from "../core/user/usecase/UserList";
-import CreateUserModal from "./CreateUserModal";
+import { userList } from "../../core/user/usecase/UserList";
+import CreateUserModal from "../modals/CreateUserModal";
 
 export default function UserPage() {
   const [open, setOpen] = useState(null);
