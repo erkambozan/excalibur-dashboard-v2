@@ -27,7 +27,7 @@ const StyledSection = styled("div")(({ theme }) => ({
 }));
 
 const StyledContent = styled("div")(({ theme }) => ({
-  maxWidth: 480,
+  maxWidth: 380,
   margin: "auto",
   minHeight: "100vh",
   display: "flex",

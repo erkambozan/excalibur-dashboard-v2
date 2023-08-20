@@ -2,15 +2,17 @@ import { Helmet } from "react-helmet-async";
 import React, { useEffect, useState } from "react";
 // @mui
 import {
+  Box,
   Button,
   Card,
-  Container,
+  Container, Divider,
   MenuItem,
   Popover,
   Stack,
   TableContainer,
   TablePagination,
   Typography,
+  Tab, Tabs,
 } from "@mui/material";
 // components
 import Iconify from "../../components/iconify";
@@ -24,6 +26,8 @@ import { employeeColumns } from "../../core/employee/entity/Employee";
 import { localeTableText } from "../../app/tableLocale";
 import CreateEmployeeModal from "../modals/CreateEmployeeModal";
 import RequestAnnualLeave from "../RequestAnnualLeave";
+import DataGrid from "../../components/data-grid/DataGrid";
+
 
 export default function AnnualLeave() {
   const [open, setOpen] = useState(null);
@@ -59,7 +63,10 @@ export default function AnnualLeave() {
   const handleFilterModel = (filterModel) => {
     console.log(filterModel.items.map((item) => item));
   };
-
+  const [value, setValue] = useState("one");
+  const handleChange = (event, newValue) => {
+    setValue(newValue);
+  };
   const handleOpen = () => {
     setOpenModal(true);
   };
@@ -74,8 +81,9 @@ export default function AnnualLeave() {
           <title> Yıllık İzin Taleplerim | Tommy Life </title>
         </Helmet>
 
-        <Container>
+        <>
           <Stack
+            display="flex"
               direction="row"
               alignItems="center"
               justifyContent="space-between"
@@ -93,71 +101,20 @@ export default function AnnualLeave() {
             </Button>
             <RequestAnnualLeave open={openModal} close={handleClose} />
           </Stack>
+          <Box >
+            <Tabs sx={{mb:5}}  value={value} onChange={handleChange} aria-label="wrapped label tabs example">
+              <Tab value="one" label="Tüm İzinler" wrapped/>
+              <Tab value="two" label="Bekleyen İzinler"/>
+              <Tab value="three" label="Onaylanan İzinler"/>
+            </Tabs>
+            {value === "one" &&
+              <DataGrid/>
+            }
+          </Box>
 
-          <Card>
-            <Scrollbar>
-              <Stack
-                  direction="row"
-                  alignItems="center"
-                  justifyContent="space-between"
-                  mb={5}
-              >
-                <TableContainer sx={{ minWidth: 800 }}>
-                  <DataGridPro
-                      rows={employeeState}
-                      columns={employeeColumns}
-                      localeText={{
-                        ...localeTableText,
-                      }}
-                      loading={loading}
-                      unstable_headerFilters
-                      onFilterModelChange={handleFilterModel}
-                      sx={{ padding: "10px" }}
-                  />
-                </TableContainer>
-              </Stack>
-            </Scrollbar>
+          <Divider/>
 
-            <TablePagination
-                rowsPerPageOptions={[5, 10, 25]}
-                component="div"
-                count={employees.length}
-                rowsPerPage={rowsPerPage}
-                page={page}
-                onPageChange={handleChangePage}
-                onRowsPerPageChange={handleChangeRowsPerPage}
-            />
-          </Card>
-        </Container>
-
-        <Popover
-            open={Boolean(open)}
-            anchorEl={open}
-            onClose={handleCloseMenu}
-            anchorOrigin={{ vertical: "top", horizontal: "left" }}
-            transformOrigin={{ vertical: "top", horizontal: "right" }}
-            PaperProps={{
-              sx: {
-                p: 1,
-                width: 140,
-                "& .MuiMenuItem-root": {
-                  px: 1,
-                  typography: "body2",
-                  borderRadius: 0.75,
-                },
-              },
-            }}
-        >
-          <MenuItem>
-            <Iconify icon={"eva:edit-fill"} sx={{ mr: 2 }} />
-            Edit
-          </MenuItem>
-
-          <MenuItem sx={{ color: "error.main" }}>
-            <Iconify icon={"eva:trash-2-outline"} sx={{ mr: 2 }} />
-            Delete
-          </MenuItem>
-        </Popover>
+        </>
       </>
   );
 }

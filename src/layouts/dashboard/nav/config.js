@@ -4,10 +4,8 @@ import AccountTreeIcon from "@mui/icons-material/AccountTree";
 import PersonIcon from "@mui/icons-material/Person";
 import GridViewIcon from "@mui/icons-material/GridView";
 import BadgeIcon from "@mui/icons-material/Badge";
-import ContactMailIcon from '@mui/icons-material/ContactMail';
-
-// ----------------------------------------------------------------------
-
+import FlightTakeoffRoundedIcon from '@mui/icons-material/FlightTakeoffRounded';
+import GroupRoundedIcon from '@mui/icons-material/GroupRounded';
 const navConfig = [
   {
     title: "dashboard",
@@ -17,12 +15,12 @@ const navConfig = [
   {
     title: "kullanıcı",
     path: "/dashboard/user",
-    icon: <PersonIcon />,
+    icon: <BadgeIcon/>,
   },
   {
-    title: "çalışan",
+    title: "Çalışanlar",
     path: "/dashboard/employee",
-    icon: <BadgeIcon />,
+    icon: <GroupRoundedIcon />,
   },
   {
     title: "hiyerarşi",
@@ -30,9 +28,9 @@ const navConfig = [
     icon: <AccountTreeIcon />,
   },
   {
-    title: "Yıllık İzin",
+    title: "İzinler",
     path: "/dashboard/annualleave",
-    icon: <ContactMailIcon />,
+    icon: <FlightTakeoffRoundedIcon />,
   },
 ];
 

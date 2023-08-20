@@ -2,6 +2,7 @@ import { Helmet } from "react-helmet-async";
 import { useEffect, useState } from "react";
 // @mui
 import {
+  Box,
   Button,
   Card,
   Container,
@@ -10,20 +11,22 @@ import {
   Stack,
   TableContainer,
   TablePagination,
-  Typography,
+  Typography
 } from "@mui/material";
 // components
 import Iconify from "../../components/iconify";
 import Scrollbar from "../../components/scrollbar";
 // sections
 // mock
-import USERLIST from "../../_mock/user";
+/*import USERLIST from "../../_mock/user";
 import { DataGridPro } from "@mui/x-data-grid-pro";
 import { localeTableText } from "../../app/tableLocale";
-import { userColumns } from "../../core/user/entity/User";
+import { userColumns } from "../../core/user/entity/User";*/
 import {useDispatch, useSelector} from "react-redux";
 import { userList } from "../../core/user/usecase/UserList";
 import CreateUserModal from "../modals/CreateUserModal";
+import DataGrid from "../../components/data-grid/DataGrid";
+
 
 export default function UserPage() {
   const [open, setOpen] = useState(null);
@@ -69,62 +72,27 @@ export default function UserPage() {
         <title> Kullanıcı | Tommy Life </title>
       </Helmet>
 
-      <Container>
-        <Stack
-          direction="row"
-          alignItems="center"
-          justifyContent="space-between"
-          mb={5}
-        >
-          <Typography variant="h4" gutterBottom>
-            Kullanıcı
-          </Typography>
-          <Button
-            variant="contained"
-            startIcon={<Iconify icon="eva:plus-fill" />}
-            onClick={() => setOpenModal(true)}
-          >
-            Yeni Kullanıcı
-          </Button>
-          <CreateUserModal open={openModal} close={handleCloseModal}/>
-        </Stack>
-
-        <Card>
-          <Scrollbar>
-            <Stack
-              direction="row"
-              alignItems="center"
-              justifyContent="space-between"
-              mb={5}
-            >
-              <TableContainer sx={{ minWidth: 800 }}>
-                <DataGridPro
-                  rows={users}
-                  columns={userColumns}
-                  localeText={{
-                    ...localeTableText,
-                  }}
-                  loading={loading}
-                  unstable_headerFilters
-                  onFilterModelChange={handleFilterModel}
-                  sx={{ padding: "10px" }}
-                />
-              </TableContainer>
-            </Stack>
-          </Scrollbar>
-
-          <TablePagination
-            rowsPerPageOptions={[5, 10, 25]}
-            component="div"
-            count={USERLIST.length}
-            rowsPerPage={rowsPerPage}
-            page={page}
-            onPageChange={handleChangePage}
-            onRowsPerPageChange={handleChangeRowsPerPage}
-          />
-        </Card>
-      </Container>
-
+     <Box>
+       <Stack
+         direction="row"
+         alignItems="center"
+         justifyContent="space-between"
+         mb={5}
+       >
+         <Typography variant="h4" gutterBottom>
+           Kullanıcı
+         </Typography>
+         <Button
+           variant="contained"
+           startIcon={<Iconify icon="eva:plus-fill" />}
+           onClick={() => setOpenModal(true)}
+         >
+           Yeni Kullanıcı
+         </Button>
+         <CreateUserModal open={openModal} close={handleCloseModal}/>
+       </Stack>
+     </Box>
+      <DataGrid/>
       <Popover
         open={Boolean(open)}
         anchorEl={open}

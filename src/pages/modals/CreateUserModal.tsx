@@ -105,8 +105,7 @@ export default function CreateUserModal({
         aria-describedby="alert-dialog-description"
         PaperProps={{
           sx: {
-            width: "100%",
-            height: "100%",
+          textAlign:"center"
           },
         }}
       >
@@ -122,13 +121,13 @@ export default function CreateUserModal({
             justifyContent="center" // Center vertically
             sx={{
               "& .MuiTextField-root": { m: 1, width: "30ch" },
-              "& .MuiFormControl-root": { m: 1, width: "30ch" },
+              "& .MuiFormControl-root": { m: 1, width: "45ch" },
             }}
             noValidate
             autoComplete="off"
           >
             <FormControl>
-              <InputLabel id="demo-simple-select-label">
+              {/*<InputLabel id="demo-simple-select-label">
                 Kullanıcı Adı
               </InputLabel>
               <Input
@@ -141,8 +140,46 @@ export default function CreateUserModal({
                     <AccountCircle />
                   </InputAdornment>
                 }
-              />
+              />*/}
+
             </FormControl>
+            <TextField
+              id="outlined-required"
+              label="Kullanıcı Adı"
+              required
+              onChange={handleChangeUserName}
+            />
+            <TextField
+              id="outlined-required"
+              label="Adı"
+              required
+              onChange={handleChangeFirstName}
+            />
+            <TextField
+              id="outlined-required"
+              label="Soyadı"
+              required
+              onChange={handleChangeLastName}
+            />
+            <Box>
+              <TextField
+                id="outlined-required"
+                label="Telefon Numarası"
+                required
+                onChange={handleChangePhone}
+              />
+            </Box>
+            <TextField
+              id="outlined-required"
+              label="E-Posta"
+              required
+              onChange={handleChangeEmail}
+              InputProps={{
+                startAdornment: (
+                  <InputAdornment position="start">@</InputAdornment>
+                ),
+              }}
+            />
             <FormControl>
               <InputLabel id="demo-simple-select-label">Şifre</InputLabel>
               <OutlinedInput
@@ -191,37 +228,6 @@ export default function CreateUserModal({
                 label="Password"
               />
             </FormControl>
-            <TextField
-              id="outlined-required"
-              label="E-Posta"
-              required
-              onChange={handleChangeEmail}
-              InputProps={{
-                startAdornment: (
-                  <InputAdornment position="start">@</InputAdornment>
-                ),
-              }}
-            />
-            <TextField
-              id="outlined-required"
-              label="Adı"
-              required
-              onChange={handleChangeFirstName}
-            />
-            <TextField
-              id="outlined-required"
-              label="Soyadı"
-              required
-              onChange={handleChangeLastName}
-            />
-            <Box>
-              <TextField
-                id="outlined-required"
-                label="Telefon Numarası"
-                required
-                onChange={handleChangePhone}
-              />
-            </Box>
           </Box>
         </DialogContent>
         <DialogActions>

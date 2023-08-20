@@ -90,18 +90,18 @@ export default function CreateEmployeeModal({
         PaperProps={{
           sx: {
             width: "100%",
-            height: "100%",
+            maxWidth:"400px"
           },
         }}
       >
-        <DialogTitle id="alert-dialog-title">{"Yeni Çalışan Ekle"}</DialogTitle>
+        <DialogTitle textAlign={"center"} id="alert-dialog-title">{"Yeni Çalışan Ekle"}</DialogTitle>
         <DialogContent>
           <Box
             component="form"
             display={"flex"}
             flexDirection={"column"}
             sx={{
-              "& .MuiTextField-root": { m: 1, width: "25ch" },
+              "& .MuiTextField-root": { m: 1, width: "35ch" },
             }}
             noValidate
             autoComplete="off"
@@ -146,7 +146,7 @@ export default function CreateEmployeeModal({
               </Box>
             </Box>
             <Box display="flex" alignItems="center">
-              <TextField
+             {/* <TextField
                 id="outlined-multiline-flexible"
                 label="Çalışacağı bölüm"
                 maxRows={4}
@@ -159,14 +159,32 @@ export default function CreateEmployeeModal({
                 onClick={handleOpenHierarchy}
               >
                 Bölüm Seç
-              </Button>
+              </Button>*/}
+            <Box>
+
+
+              <FormControl fullWidth style={{ margin: "8px" ,width: "35ch"}}>
+                <InputLabel id="demo-simple-select-label">
+                 Departman
+                </InputLabel>
+                <Select
+                  labelId="demo-simple-select-label"
+                  id="demo-simple-select"
+                  label="Departman"
+                >
+                  <MenuItem value={10}>Yazılım</MenuItem>
+                  <MenuItem value={20}>İnsan Kaynakları</MenuItem>
+                  <MenuItem value={30}>Lojistik</MenuItem>
+                </Select>
+              </FormControl>
               <ChooseHierarchy
                 open={openHierarchy}
                 close={handleCloseHierarchy}
               />
             </Box>
+            </Box>
             <Box>
-              <FormControl fullWidth style={{ margin: "8px" }}>
+              <FormControl fullWidth style={{ margin: "8px" ,width: "35ch"}}>
                 <InputLabel id="demo-simple-select-label">
                   Çalışan Türü
                 </InputLabel>

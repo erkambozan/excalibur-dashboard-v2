@@ -61,14 +61,8 @@ export default function CreateHierarchyModal({
         onClose={() => close}
         aria-labelledby="alert-dialog-title"
         aria-describedby="alert-dialog-description"
-        PaperProps={{
-          sx: {
-            width: "100%",
-            height: "100%",
-          },
-        }}
       >
-        <DialogTitle id="alert-dialog-title">{"Yeni Çalışan Ekle"}</DialogTitle>
+        <DialogTitle textAlign={"center"} id="alert-dialog-title">{"Hiyerarşi"}</DialogTitle>
         <DialogContent>
           <Box
             component="form"

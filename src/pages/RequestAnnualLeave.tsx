@@ -12,6 +12,7 @@ import { AdapterDayjs } from "@mui/x-date-pickers-pro/AdapterDayjs";
 import { DateRangePicker } from "@mui/x-date-pickers-pro/DateRangePicker";
 import { trTR } from "@mui/material/locale";
 import { createTheme, ThemeProvider, useTheme } from '@mui/material/styles';
+import { Leaves } from "../components/leaves/Leaves";
 
 export default function RequestAnnualLeave({
   open,
@@ -32,38 +33,10 @@ export default function RequestAnnualLeave({
         onClose={() => close}
         aria-labelledby="alert-dialog-title"
         aria-describedby="alert-dialog-description"
-        PaperProps={{
-          sx: {
-            width: "100%",
-            height: "100%",
-          },
-        }}
       >
         <DialogTitle id="alert-dialog-title">{"Yeni İzin Talebi"}</DialogTitle>
         <DialogContent>
-          <Box
-            component="form"
-            display={"flex"}
-            flexDirection={"column"}
-            sx={{
-              "& .MuiTextField-root": { m: 1, width: "25ch" },
-            }}
-            noValidate
-            autoComplete="off"
-          >
-            <InputLabel id="demo-simple-select-label">
-              İzin Tarih Aralığı
-            </InputLabel>
-            <ThemeProvider theme={themeWithLocale}>
-            <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale="tr">
-              <DemoContainer components={["DateRangePicker"]}>
-                <DateRangePicker
-                  localeText={{ start: "Başlangıç", end: "Bitiş" }}
-                />
-              </DemoContainer>
-            </LocalizationProvider>
-            </ThemeProvider>
-          </Box>
+          <Leaves/>
         </DialogContent>
         <DialogActions>
           <Button variant="outlined" color={"error"} onClick={() => close()}>
