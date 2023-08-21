@@ -12,7 +12,7 @@ import {
   TableContainer,
   TablePagination,
   Typography,
-  Tab, Tabs,
+  Tab, Tabs
 } from "@mui/material";
 // components
 import Iconify from "../../components/iconify";
@@ -27,6 +27,7 @@ import { localeTableText } from "../../app/tableLocale";
 import CreateEmployeeModal from "../modals/CreateEmployeeModal";
 import RequestAnnualLeave from "../RequestAnnualLeave";
 import DataGrid from "../../components/data-grid/DataGrid";
+import LeaveGrid from "../../components/leave-grid/LeaveGrid";
 
 
 export default function AnnualLeave() {
@@ -74,47 +75,56 @@ export default function AnnualLeave() {
   const handleClose = () => {
     setOpenModal(false);
   };
-
+  const role = "admin";
   return (
+    <>
+      <Helmet>
+        <title> Yıllık İzin Taleplerim | Tommy Life </title>
+      </Helmet>
+
       <>
-        <Helmet>
-          <title> Yıllık İzin Taleplerim | Tommy Life </title>
-        </Helmet>
-
-        <>
-          <Stack
-            display="flex"
-              direction="row"
-              alignItems="center"
-              justifyContent="space-between"
-              mb={5}
+        <Stack
+          display="flex"
+          direction="row"
+          alignItems="center"
+          justifyContent="space-between"
+          mb={5}
+        >
+          <Typography variant="h4" gutterBottom>
+            Yıllık İzin Taleplerim
+          </Typography>
+          <Button
+            variant="contained"
+            startIcon={<Iconify icon="eva:plus-fill" />}
+            onClick={handleOpen}
           >
-            <Typography variant="h4" gutterBottom>
-              Yıllık İzin Taleplerim
-            </Typography>
-            <Button
-                variant="contained"
-                startIcon={<Iconify icon="eva:plus-fill" />}
-                onClick={handleOpen}
-            >
-              Yeni İzin Talebi
-            </Button>
-            <RequestAnnualLeave open={openModal} close={handleClose} />
-          </Stack>
-          <Box >
-            <Tabs sx={{mb:5}}  value={value} onChange={handleChange} aria-label="wrapped label tabs example">
-              <Tab value="one" label="Tüm İzinler" wrapped/>
-              <Tab value="two" label="Bekleyen İzinler"/>
-              <Tab value="three" label="Onaylanan İzinler"/>
-            </Tabs>
-            {value === "one" &&
-              <DataGrid/>
-            }
-          </Box>
+            Yeni İzin Talebi
+          </Button>
+          <RequestAnnualLeave  open={openModal} close={handleClose} />
+        </Stack>
 
-          <Divider/>
+        {role === "admin" ?
+          (
+            <Box>
+              <Tabs sx={{ mb: 5 }} value={value} onChange={handleChange} aria-label="wrapped label tabs example">
+                <Tab value="one" label="İzin Taleplerim" wrapped />
+                <Tab value="two" label="Çalışan İzinleri" />
 
-        </>
+              </Tabs>
+              {value === "one" &&
+                <LeaveGrid />
+              }
+              {value === "two" &&
+                <DataGrid />
+              }
+              <Divider />
+            </Box>
+          ) : (<Box>
+            <LeaveGrid />
+          </Box>)
+
+        }
       </>
+    </>
   );
 }

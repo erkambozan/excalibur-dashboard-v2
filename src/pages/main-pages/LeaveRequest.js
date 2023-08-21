@@ -23,36 +23,27 @@ import dayjs from "dayjs";
 
 const states = [
   {
-    value: "annual-leave",
-    label: "Yıllık İzin"
+    value: "success",
+    label: "Onaylandı"
   },
   {
-    value: "military-leave",
-    label: "Askerlik İzni"
+    value: "rejection",
+    label: "Red Edildi"
   },
-  {
-    value: "maternity-leave",
-    label: "Doğum İzni"
-  },
-  {
-    value: "paternity-leave",
-    label: "Babalık İzni"
-  }
 ];
 // eslint-disable-next-line react-hooks/rules-of-hooks
 
-export const Leaves = () => {
+export const LeaveRequest = () => {
 
-  const theme = useTheme();
+    const theme = useTheme();
     const themeWithLocale = React.useMemo(
       () => createTheme(theme, trTR),
       [trTR, theme]
     );
 
     const [values, setValues] = useState({
-      state: "annual-leave",
-      day: "",
-      date: []
+      leaveStatus: "annual-leave",
+
     });
 
     const handleChange = useCallback(
@@ -65,10 +56,10 @@ export const Leaves = () => {
       []
     );
 
-  const [value, setValue] = React.useState([null, null]);
+    const [value, setValue] = React.useState([null, null]);
     return (
       <>
-        <CardContent sx={{ pt: 1.5 }}>
+        <CardContent sx={{ pt: 1.5}}>
           <Box sx={{ m: -1.5 }}>
             <Grid
               container
@@ -76,17 +67,18 @@ export const Leaves = () => {
             >
               <Grid
                 xs={12}
-                md={6}
+                md={12}
               >
                 <TextField
                   fullWidth
-                  label="İzin Nedeni"
+                  label="İzin Onay"
                   name="state"
                   onChange={handleChange}
                   required
                   select
                   SelectProps={{ native: true }}
                   value={values.state}
+                  style={{width: "300px"}}
                 >
                   {states.map((option) => (
                     <option
@@ -98,51 +90,9 @@ export const Leaves = () => {
                   ))}
                 </TextField>
               </Grid>
-              <Grid
-                xs={12}
-                md={6}
-              >
-                <TextField
-                  fullWidth
-                  label="Gün"
-                  name="day"
-                  onChange={handleChange}
-                  type={"number"}
-                  required
-
-                />
-              </Grid>
-              <Grid xs={12}
-                    md={12}>
-                <Box
-                  component="form"
-                  display={"flex"}
-                  flexDirection={"column"}
-                  noValidate
-                  autoComplete="off"
-                >
-                  <InputLabel id="demo-simple-select-label" sx={{ p: 0.5 }}>
-                    İzin Tarih Aralığı
-                  </InputLabel>
-                  <ThemeProvider theme={themeWithLocale}>
-                    <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale="tr">
-                      <DemoContainer components={["DateRangePicker"]}>
-                        <DateRangePicker
-                          startText="Check-in"
-                          endText="Check-out"
-                          name="date"
-                          value={value}
-
-                        />
-                      </DemoContainer>
-                    </LocalizationProvider>
-                  </ThemeProvider>
-                </Box>
-              </Grid>
             </Grid>
           </Box>
         </CardContent>
-
         <Divider />
 
       </>
